@@ -1,0 +1,300 @@
+@import "tailwindcss";
+
+/* ── Theme CSS custom properties (set by theme.js at runtime) ──────── */
+:root {
+  --bg-primary: #323437;
+  --bg-secondary: #2c2e31;
+  --bg-tertiary: #3a3c3f;
+  --bg-card: #2c2e31;
+  --bg-input: #2c2e31;
+  --text-primary: #d1d0c5;
+  --text-secondary: #646669;
+  --text-accent: #e2b714;
+  --border-color: #444649;
+  --border-light: #3a3c3f;
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --accent: #e2b714;
+  --accent-hover: #c9a212;
+  --accent-dim: rgba(226, 183, 20, 0.15);
+  --error: #ca4754;
+  --success: #7ec984;
+  --warning: #e2b714;
+  --info: #5b98d6;
+  --color-new: #5b98d6;
+  --color-learning: #e2b714;
+  --color-due: #7ec984;
+  --btn-again: #ca4754;
+  --btn-hard: #e2965d;
+  --btn-good: #7ec984;
+  --btn-easy: #5b98d6;
+  --radius: 0.5rem;
+  --font-size: 16px;
+  --bg-image-url: none;
+  --bg-blur: 0px;
+  --bg-brightness: 1;
+  --bg-saturation: 100%;
+  --bg-opacity: 1;
+  --ui-opacity: 1;
+  --ui-blur: 0px;
+  --font-family: 'Roboto Mono', 'JetBrains Mono', 'Fira Code', monospace;
+}
+
+@theme {
+  --color-glass: var(--bg-secondary);
+  --color-glassDark: var(--bg-tertiary);
+}
+
+@utility glass-panel {
+  background-color: color-mix(in srgb, var(--bg-secondary) calc(var(--ui-opacity) * 100%), transparent);
+  backdrop-filter: blur(var(--ui-blur));
+  -webkit-backdrop-filter: blur(var(--ui-blur));
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px 0 var(--shadow-color);
+  border-radius: var(--radius);
+}
+
+/* Glass surface utility: applies ui-opacity + backdrop-filter blur.
+   Used on navbar, cards, panels, etc. Content inside is NOT blurred. */
+@utility glass-surface {
+  background-color: color-mix(in srgb, var(--bg-secondary) calc(var(--ui-opacity) * 100%), transparent);
+  backdrop-filter: blur(var(--ui-blur));
+  -webkit-backdrop-filter: blur(var(--ui-blur));
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  font-size: var(--font-size);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* ── Scrollbar styling (matches dark theme) ──────────────────────────── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
+
+/* ------------------------------------------------------------------ */
+/* Anki rich-card renderer                                             */
+/* ------------------------------------------------------------------ */
+.anki-card {
+  text-align: center;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  line-height: 1.6;
+}
+
+/* Images */
+.anki-card img {
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  margin: 0.5rem auto;
+  display: block;
+}
+
+/* Audio controls */
+.anki-card audio {
+  max-width: 100%;
+  margin: 0.5rem auto;
+  display: block;
+}
+
+/* Cloze deletions */
+.anki-card .cloze {
+  font-weight: 700;
+  color: var(--text-accent);
+}
+
+/* Horizontal rules (Anki uses <hr id=answer>) */
+.anki-card hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0.75rem 0;
+}
+
+/* Tables */
+.anki-card table {
+  border-collapse: collapse;
+  margin: 0.5rem auto;
+}
+.anki-card th,
+.anki-card td {
+  border: 1px solid var(--border-color);
+  padding: 0.35rem 0.6rem;
+  text-align: left;
+}
+
+/* Lists */
+.anki-card ul,
+.anki-card ol {
+  text-align: left;
+  padding-left: 1.5rem;
+  margin: 0.5rem 0;
+}
+
+/* Broken / missing image placeholder */
+.anki-card img[src=""],
+.anki-card img:not([src]) {
+  display: none;
+}
+.anki-img-placeholder {
+  display: inline-block;
+  background: var(--bg-tertiary);
+  border: 1px dashed var(--border-color);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  margin: 0.5rem auto;
+}
+
+/* KaTeX overrides — blend into card */
+.anki-card .katex-display {
+  margin: 0.5rem 0;
+}
+
+/* Preview mode in drawer — smaller images, compact */
+.anki-card-preview img {
+  max-height: 80px;
+}
+.anki-card-preview {
+  max-height: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ------------------------------------------------------------------ */
+/* TipTap rich text editor                                             */
+/* ------------------------------------------------------------------ */
+
+/* Placeholder */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: var(--text-secondary);
+  pointer-events: none;
+  height: 0;
+  font-style: italic;
+}
+
+/* Basic prose styling inside the editor */
+.tiptap {
+  min-height: 4rem;
+}
+.tiptap:focus {
+  outline: none;
+}
+.tiptap > * + * {
+  margin-top: 0.5em;
+}
+.tiptap p {
+  margin: 0;
+}
+.tiptap ul,
+.tiptap ol {
+  padding-left: 1.25rem;
+  margin: 0.25rem 0;
+}
+.tiptap ul {
+  list-style-type: disc;
+}
+.tiptap ol {
+  list-style-type: decimal;
+}
+.tiptap li > p {
+  margin: 0;
+}
+.tiptap h1 {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin: 0.4em 0 0.2em;
+}
+.tiptap h2 {
+  font-size: 1.25em;
+  font-weight: 700;
+  margin: 0.4em 0 0.2em;
+}
+.tiptap h3 {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin: 0.3em 0 0.2em;
+}
+.tiptap blockquote {
+  border-left: 3px solid var(--border-color);
+  padding-left: 0.75rem;
+  margin: 0.5rem 0;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+.tiptap hr {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 0.75rem 0;
+}
+.tiptap pre {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  font-family: 'Roboto Mono', 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.85em;
+  overflow-x: auto;
+  margin: 0.5rem 0;
+}
+.tiptap pre code {
+  color: inherit;
+  background: none;
+  padding: 0;
+  font-size: inherit;
+}
+.tiptap code {
+  background: var(--bg-tertiary);
+  color: var(--text-accent);
+  border-radius: 0.25rem;
+  padding: 0.15em 0.3em;
+  font-size: 0.9em;
+  font-family: 'Roboto Mono', 'JetBrains Mono', 'Fira Code', monospace;
+}
+.tiptap img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  margin: 0.5rem 0;
+  display: inline-block;
+}
+.tiptap img.ProseMirror-selectednode {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+  border-radius: 0.5rem;
+}
+.tiptap mark {
+  border-radius: 0.15em;
+  padding: 0.05em 0.1em;
+}
+.tiptap s {
+  text-decoration: line-through;
+}
+.tiptap strong {
+  font-weight: 700;
+}
+.tiptap em {
+  font-style: italic;
+}
+.tiptap u {
+  text-decoration: underline;
+}

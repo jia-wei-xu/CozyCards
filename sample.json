@@ -1,0 +1,587 @@
+[
+    {
+        "back": "<div id=\"kard\">\n    <div class=\"tags\" id='tags'></div>\n    \n    <div>&nbsp;</div>\n    <div id='extra'><div><img src=\"Ohms Law.png\"></div><div><br></div><div><a href=\"https://www.khanacademy.org/science/ap-physics-1/ap-circuits-topic/current-ap/v/circuits-part-1\">Khan Academy Link</a><br></div></div>\n</div>",
+        "css": "html { overflow: scroll; overflow-x: hidden; }\n/* CONTAINER FOR YOUR CARDS */\n#kard {\n    padding: 0px 0px;\n    max-width: 700px; /* CHANGE CARD SIZE HERE */\n    margin: 0 auto; /* CENTERS THE CARD IN THE MIDDLE OF THE WINDOW */\n    word-wrap: break-word; /* BREAKS UP LONG WORKS */\n}\n\n/* APPLIES TO THE WHOLE CARD */\n.card {\n    font-family: Menlo, baskerville, sans;\n    font-size: 18px; /* FONT SIZE */\n    text-align: center; /* ALIGN TEXT */\n    color: #D7DEE9; /* FONT COLOR */\n    line-height: 1.6em;\n    background-color: #333B45; /* BACKGROUND COLOR */\n}\n/* STYLE FOR CLOZE DELETIONS */\n.cloze, .cloze b, .cloze u, .cloze i { font-weight: bold; color: MediumSeaGreen !important;}\n\n/* STYLE FOR EXTRA PORTION ON BACK OF CARD */\n#extra, #extra { font-size: 15px; color:#D7DEE9; font-style: normal; }\n\n/* STYLE TAGS TO APPEAR WHEN HOVERING OVER TOP OF CARD */\n.tags { \n    color: #A6ABB9;\n    opacity: 0;\n    font-size: 10px; \n    width: 100%;\n    text-align: center;\n    text-transform: uppercase; \n    position: fixed; \n    padding: 0; \n    top:0;  \n    right: 0;}\n.tags:hover { opacity: 1; position: fixed;}\n\n/* IMAGE STYLE */\nimg { display: block; max-width: 100%; max-height: none; margin-left: auto; margin: 10px auto 10px auto;}\ntr {font-size: 12px; }\n\n/* COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE */\nb { color: #C695C6 !important; } /* BOLD STYLE */\nu { text-decoration: none; font-weight: bold; color: #6fbbbb;} /* UNDERLINE STYLE */\ni  { font-style: normal; font-weight: bold; color: IndianRed; } /* ITALICS STYLE */\na { color: LightGray !important; text-decoration: none; font-size: 18px; font-style: normal; } /* LINK STYLE */\n\n/* ADJUSTMENT FOR MOBILE DEVICES */\n.mobile .card { color: #D7DEE9; background-color: #333B45; } \n.mobile .tags:hover { opacity: 1; position: relative;}",
+        "front": "<div id=\"kard\">\n<div class=\"tags\"></div>\n\n</div>"
+    },
+    {
+        "back": "<div id=\"kard\">\n    <div class=\"tags\" id='tags'></div>\n    \n    <div>&nbsp;</div>\n    <div id='extra'><div><img src=\"Doppler.png\"></div><div><br></div><div><a href=\"https://www.khanacademy.org/science/physics/mechanical-waves-and-sound/doppler-effect/v/doppler-effect-formula-for-observed-frequency\">Khan Academy Link</a></div></div>\n</div>",
+        "css": "html { overflow: scroll; overflow-x: hidden; }\n/* CONTAINER FOR YOUR CARDS */\n#kard {\n    padding: 0px 0px;\n    max-width: 700px; /* CHANGE CARD SIZE HERE */\n    margin: 0 auto; /* CENTERS THE CARD IN THE MIDDLE OF THE WINDOW */\n    word-wrap: break-word; /* BREAKS UP LONG WORKS */\n}\n\n/* APPLIES TO THE WHOLE CARD */\n.card {\n    font-family: Menlo, baskerville, sans;\n    font-size: 18px; /* FONT SIZE */\n    text-align: center; /* ALIGN TEXT */\n    color: #D7DEE9; /* FONT COLOR */\n    line-height: 1.6em;\n    background-color: #333B45; /* BACKGROUND COLOR */\n}\n/* STYLE FOR CLOZE DELETIONS */\n.cloze, .cloze b, .cloze u, .cloze i { font-weight: bold; color: MediumSeaGreen !important;}\n\n/* STYLE FOR EXTRA PORTION ON BACK OF CARD */\n#extra, #extra { font-size: 15px; color:#D7DEE9; font-style: normal; }\n\n/* STYLE TAGS TO APPEAR WHEN HOVERING OVER TOP OF CARD */\n.tags { \n    color: #A6ABB9;\n    opacity: 0;\n    font-size: 10px; \n    width: 100%;\n    text-align: center;\n    text-transform: uppercase; \n    position: fixed; \n    padding: 0; \n    top:0;  \n    right: 0;}\n.tags:hover { opacity: 1; position: fixed;}\n\n/* IMAGE STYLE */\nimg { display: block; max-width: 100%; max-height: none; margin-left: auto; margin: 10px auto 10px auto;}\ntr {font-size: 12px; }\n\n/* COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE */\nb { color: #C695C6 !important; } /* BOLD STYLE */\nu { text-decoration: none; font-weight: bold; color: #6fbbbb;} /* UNDERLINE STYLE */\ni  { font-style: normal; font-weight: bold; color: IndianRed; } /* ITALICS STYLE */\na { color: LightGray !important; text-decoration: none; font-size: 18px; font-style: normal; } /* LINK STYLE */\n\n/* ADJUSTMENT FOR MOBILE DEVICES */\n.mobile .card { color: #D7DEE9; background-color: #333B45; } \n.mobile .tags:hover { opacity: 1; position: relative;}",
+        "front": "<div id=\"kard\">\n<div class=\"tags\"></div>\n\n</div>"
+    },
+    {
+        "back": "<div id=\"kard\">\n    <div class=\"tags\" id='tags'></div>\n    \n    <div>&nbsp;</div>\n    <div id='extra'><div><img src=\"Doppler.png\"></div><div><br></div><div><a href=\"https://www.khanacademy.org/science/physics/mechanical-waves-and-sound/doppler-effect/v/doppler-effect-formula-for-observed-frequency\">Khan Academy Link</a><br></div></div>\n</div>",
+        "css": "html { overflow: scroll; overflow-x: hidden; }\n/* CONTAINER FOR YOUR CARDS */\n#kard {\n    padding: 0px 0px;\n    max-width: 700px; /* CHANGE CARD SIZE HERE */\n    margin: 0 auto; /* CENTERS THE CARD IN THE MIDDLE OF THE WINDOW */\n    word-wrap: break-word; /* BREAKS UP LONG WORKS */\n}\n\n/* APPLIES TO THE WHOLE CARD */\n.card {\n    font-family: Menlo, baskerville, sans;\n    font-size: 18px; /* FONT SIZE */\n    text-align: center; /* ALIGN TEXT */\n    color: #D7DEE9; /* FONT COLOR */\n    line-height: 1.6em;\n    background-color: #333B45; /* BACKGROUND COLOR */\n}\n/* STYLE FOR CLOZE DELETIONS */\n.cloze, .cloze b, .cloze u, .cloze i { font-weight: bold; color: MediumSeaGreen !important;}\n\n/* STYLE FOR EXTRA PORTION ON BACK OF CARD */\n#extra, #extra { font-size: 15px; color:#D7DEE9; font-style: normal; }\n\n/* STYLE TAGS TO APPEAR WHEN HOVERING OVER TOP OF CARD */\n.tags { \n    color: #A6ABB9;\n    opacity: 0;\n    font-size: 10px; \n    width: 100%;\n    text-align: center;\n    text-transform: uppercase; \n    position: fixed; \n    padding: 0; \n    top:0;  \n    right: 0;}\n.tags:hover { opacity: 1; position: fixed;}\n\n/* IMAGE STYLE */\nimg { display: block; max-width: 100%; max-height: none; margin-left: auto; margin: 10px auto 10px auto;}\ntr {font-size: 12px; }\n\n/* COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE */\nb { color: #C695C6 !important; } /* BOLD STYLE */\nu { text-decoration: none; font-weight: bold; color: #6fbbbb;} /* UNDERLINE STYLE */\ni  { font-style: normal; font-weight: bold; color: IndianRed; } /* ITALICS STYLE */\na { color: LightGray !important; text-decoration: none; font-size: 18px; font-style: normal; } /* LINK STYLE */\n\n/* ADJUSTMENT FOR MOBILE DEVICES */\n.mobile .card { color: #D7DEE9; background-color: #333B45; } \n.mobile .tags:hover { opacity: 1; position: relative;}",
+        "front": "<div id=\"kard\">\n<div class=\"tags\"></div>\n\n</div>"
+    },
+    {
+        "back": "<div id=\"kard\">\n    <div class=\"tags\" id='tags'></div>\n    \n    <div>&nbsp;</div>\n    <div id='extra'><div><i>Doppler Ultrasound</i> is&nbsp;used to determine the <i>flow of blood</i> within the body<br></div><div><br></div><div><img src=\"Ultrasound.jpg\"></div><div><br></div><div><a href=\"https://www.khanacademy.org/science/physics/mechanical-waves-and-sound/sound-topic/v/ultrasound-medical-imaging\">Khan Academy Link</a></div></div>\n</div>",
+        "css": "html { overflow: scroll; overflow-x: hidden; }\n/* CONTAINER FOR YOUR CARDS */\n#kard {\n    padding: 0px 0px;\n    max-width: 700px; /* CHANGE CARD SIZE HERE */\n    margin: 0 auto; /* CENTERS THE CARD IN THE MIDDLE OF THE WINDOW */\n    word-wrap: break-word; /* BREAKS UP LONG WORKS */\n}\n\n/* APPLIES TO THE WHOLE CARD */\n.card {\n    font-family: Menlo, baskerville, sans;\n    font-size: 18px; /* FONT SIZE */\n    text-align: center; /* ALIGN TEXT */\n    color: #D7DEE9; /* FONT COLOR */\n    line-height: 1.6em;\n    background-color: #333B45; /* BACKGROUND COLOR */\n}\n/* STYLE FOR CLOZE DELETIONS */\n.cloze, .cloze b, .cloze u, .cloze i { font-weight: bold; color: MediumSeaGreen !important;}\n\n/* STYLE FOR EXTRA PORTION ON BACK OF CARD */\n#extra, #extra { font-size: 15px; color:#D7DEE9; font-style: normal; }\n\n/* STYLE TAGS TO APPEAR WHEN HOVERING OVER TOP OF CARD */\n.tags { \n    color: #A6ABB9;\n    opacity: 0;\n    font-size: 10px; \n    width: 100%;\n    text-align: center;\n    text-transform: uppercase; \n    position: fixed; \n    padding: 0; \n    top:0;  \n    right: 0;}\n.tags:hover { opacity: 1; position: fixed;}\n\n/* IMAGE STYLE */\nimg { display: block; max-width: 100%; max-height: none; margin-left: auto; margin: 10px auto 10px auto;}\ntr {font-size: 12px; }\n\n/* COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE */\nb { color: #C695C6 !important; } /* BOLD STYLE */\nu { text-decoration: none; font-weight: bold; color: #6fbbbb;} /* UNDERLINE STYLE */\ni  { font-style: normal; font-weight: bold; color: IndianRed; } /* ITALICS STYLE */\na { color: LightGray !important; text-decoration: none; font-size: 18px; font-style: normal; } /* LINK STYLE */\n\n/* ADJUSTMENT FOR MOBILE DEVICES */\n.mobile .card { color: #D7DEE9; background-color: #333B45; } \n.mobile .tags:hover { opacity: 1; position: relative;}",
+        "front": "<div id=\"kard\">\n<div class=\"tags\"></div>\n\n</div>"
+    },
+    {
+        "back": "<div id=\"kard\">\n    <div class=\"tags\" id='tags'></div>\n    \n    <div>&nbsp;</div>\n    <div id='extra'><div><br></div><div>Focuses on POSITIVE REINFORCEMENT&nbsp;</div><div><img src=\"Incentive Theory.png\"></div><div><br></div><div><a href=\"https://www.khanacademy.org/test-prep/mcat/behavior/physiological-and-sociocultural-concepts-of-motivation-and-attitudes/v/incentive-theory\">Khan Academy Link</a><br></div></div>\n</div>",
+        "css": "html { overflow: scroll; overflow-x: hidden; }\n/* CONTAINER FOR YOUR CARDS */\n#kard {\n    padding: 0px 0px;\n    max-width: 700px; /* CHANGE CARD SIZE HERE */\n    margin: 0 auto; /* CENTERS THE CARD IN THE MIDDLE OF THE WINDOW */\n    word-wrap: break-word; /* BREAKS UP LONG WORKS */\n}\n\n/* APPLIES TO THE WHOLE CARD */\n.card {\n    font-family: Menlo, baskerville, sans;\n    font-size: 18px; /* FONT SIZE */\n    text-align: center; /* ALIGN TEXT */\n    color: #D7DEE9; /* FONT COLOR */\n    line-height: 1.6em;\n    background-color: #333B45; /* BACKGROUND COLOR */\n}\n/* STYLE FOR CLOZE DELETIONS */\n.cloze, .cloze b, .cloze u, .cloze i { font-weight: bold; color: MediumSeaGreen !important;}\n\n/* STYLE FOR EXTRA PORTION ON BACK OF CARD */\n#extra, #extra { font-size: 15px; color:#D7DEE9; font-style: normal; }\n\n/* STYLE TAGS TO APPEAR WHEN HOVERING OVER TOP OF CARD */\n.tags { \n    color: #A6ABB9;\n    opacity: 0;\n    font-size: 10px; \n    width: 100%;\n    text-align: center;\n    text-transform: uppercase; \n    position: fixed; \n    padding: 0; \n    top:0;  \n    right: 0;}\n.tags:hover { opacity: 1; position: fixed;}\n\n/* IMAGE STYLE */\nimg { display: block; max-width: 100%; max-height: none; margin-left: auto; margin: 10px auto 10px auto;}\ntr {font-size: 12px; }\n\n/* COLOR ACCENTS FOR BOLD-ITALICS-UNDERLINE */\nb { color: #C695C6 !important; } /* BOLD STYLE */\nu { text-decoration: none; font-weight: bold; color: #6fbbbb;} /* UNDERLINE STYLE */\ni  { font-style: normal; font-weight: bold; color: IndianRed; } /* ITALICS STYLE */\na { color: LightGray !important; text-decoration: none; font-size: 18px; font-style: normal; } /* LINK STYLE */\n\n/* ADJUSTMENT FOR MOBILE DEVICES */\n.mobile .card { color: #D7DEE9; background-color: #333B45; } \n.mobile .tags:hover { opacity: 1; position: relative;}",
+        "front": "<div id=\"kard\">\n<div class=\"tags\"></div>\n\n</div>"
+    },
+    {
+        "back": "<br>\nFranz Gall",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-103fdf0a257113b171a8d436e7d9044afb624a3b.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-29bd91008f49f059f7084c42bb0b94b0054afb7f.jpg\"><br>*Passage was about how participant rated the art piece before or after confederates rated an art piece",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-11ef61b95d922bb52051878914d6d9bd0a3da29e.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-5cd096fe53647fa318409daca47d64ca5a40030b.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<div>My - Mistrust vs trust (1)<br></div><div>Shameful - Shame/doubt vs autonomy (1+2=3)</div><div>Goat - guilt vs initiative (3+3 = 6)</div><div>In - Inferiority vs industry (primary education 6-12)</div><div>Red - Role confusion vs identity (young adult 12-20)</div><div>Intimately - Intimacy vs Isolation (until middle age 20-40)</div><div>Generates - Generativity vs stagnation (until retirement 40-65)</div><div>Dairy - Despair vs integrity (until death, 65+)</div><img src=\"Erikson-Stages-of-Development-1.jpg\"><br>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-bbff543af34df876bb7d1970fe18741872022dc9.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-dad27ea9bc44306f903d79e6df50d962157d2419.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-6970ebbd77d644e4d29b32173c5eae030fe4f2da.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-ae723add6488caf0a1b255ee496e9a39903d42b9.jpg\"><br>*Mouse avoiding light side is behavior associated with anxiety",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"Types-of-Personality-Disorders.png\"><img src=\"paste-718b6ea16041ba6312d00f06be7f797737a8fd7e.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-553bc11e69c808ab6ab5fd72ab94d9215f64dde0.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-b4335baa5e507b9708b1f20f07aa6ab9ccf86bab.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-edabf1ebf57e997e30aa1af136a213e319e9fc92.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<div style=\"text-align: center;\"><br></div><div style=\"text-align: center;\"><br></div><div style=\"text-align: center;\"><br></div><div style=\"text-align: center;\"><br></div><div style=\"text-align: center;\">Social interaction explains why child would want to learn language, but doesn't explicitly explain why they would learn parent's language. That's why behaviorist is more accurate.&nbsp;</div><div style=\"text-align: center;\"><br></div><div style=\"text-align: center;\"><img src=\"paste-b7df088c8911d5f891d832c404558708baba058d.jpg\"></div><br>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><br><br><img src=\"paste-f68f33ee71342cc8c38fe47ea820ab93bbd44707.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><img src=\"paste-c2b295012cc6037aac88692710008e1e38cba42c.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-bc1b86ce3ac07c3a5a59f64b8aff629076427e8c.jpg\"><br>Travelling through bone",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><img src=\"paste-2086d1ab20ddcae00840fe0d40d1e92973d80321.jpg\"><br><br><img src=\"paste-224e87faaf1efb4763c722389434e7b8445e689c.jpg\"><br><br><img alt=\"Cyberphysics - Lenses\" src=\"power_lens.gif\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br>Because oxygen always -2 each --&gt; -6 + (+1) from K = -5. However nitrogen has to bring total to 0, so nitrogen = +5.",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-c2eee0f0d70c1dc58502c57222b305fa88d9e792.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\nL = Leucine! (NOT lysine K)<br>A = Alanine! (NOT arginine R)<br>P = Proline! (NOT phe F)",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br>Higher efficiency = faster<br><img src=\"paste-986e114d33159c8384c69d07fa9eb7f1788a613e.jpg\"><br><img src=\"paste-5ef8f226de22f391ede93970f619f39401d30134.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-9f8b88beacdd0aebc1a5cbbdb5b5a1f57a6920ae.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-c0cb3290fe6d38e413bc88ec2a5ee9843b8dd3b8.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-daa247f1330da5e9c629521d2e5f1a6213f8a966.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-4ee1fa7f1231d700af9aa248f188d2b81324a186.jpg\"><br><img src=\"paste-f569f2c0b336a58f286e5dfa9d638ae587bf0621.jpg\"><br><br><img src=\"paste-d6b0f858e0b83ec0d6e1b05c6b64551e9fcf2ad3.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><img src=\"paste-4720a1dd010f1ad057e09dcacf21f47cc716d820.jpg\"><br>Mouth is also from ectoderm",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-8ac2e0d5f916bc7666961c4b0aa6545e7dc8e097.jpg\"><br><br><img src=\"paste-e3478c1f18b19095648b3eb6f04bf5455e93e378.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img alt=\"Depolarization - Definition and Examples - Biology Online Dictionary\" src=\"depolarization-diagram.png\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n(Restoration of resting membrane potential)",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img alt=\"Physiology: Action Potential Graph (Made Simple)\" src=\"maxresdefault.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-bc58360b81692d1353d3c9d2625d368e51721f5a.jpg\"><br><img src=\"paste-a39b67020ee3de252bc47687018c1242fb12ca85.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\nExamples:<br><strong><a href=\"https://www.google.com/search?q=Aminotransferases&amp;rlz=1C1RXMK_enUS1069US1069&amp;oq=transferase+examples&amp;gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBwgBEAAYgAQyCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjIICAcQABgWGB4yDQgIEAAYhgMYgAQYigUyCggJEAAYgAQYogTSAQg0MDIwajBqOagCBrACAfEF02_MsmCqJ9Q&amp;sourceid=chrome&amp;ie=UTF-8&amp;ved=2ahUKEwiQvYns4-mRAxUNke4BHV5fC2EQgK4QegYIAQgAEBg\">Aminotransferases</a>&nbsp;(Transaminases)</strong>: Move amino groups (e.g., Alanine transaminase, Aspartate transaminase)<br><strong><a href=\"https://www.google.com/search?q=Methyltransferases&amp;rlz=1C1RXMK_enUS1069US1069&amp;oq=transferase+examples&amp;gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBwgBEAAYgAQyCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjIICAcQABgWGB4yDQgIEAAYhgMYgAQYigUyCggJEAAYgAQYogTSAQg0MDIwajBqOagCBrACAfEF02_MsmCqJ9Q&amp;sourceid=chrome&amp;ie=UTF-8&amp;ved=2ahUKEwiQvYns4-mRAxUNke4BHV5fC2EQgK4QegYIAQgAEBs\">Methyltransferases</a></strong>: Add methyl groups (e.g., DNA Methyltransferase, Catechol-O-methyltransferase (COMT))<br><strong><a href=\"https://www.google.com/search?q=Glycosyltransferases&amp;rlz=1C1RXMK_enUS1069US1069&amp;oq=transferase+examples&amp;gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBwgBEAAYgAQyCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjIICAcQABgWGB4yDQgIEAAYhgMYgAQYigUyCggJEAAYgAQYogTSAQg0MDIwajBqOagCBrACAfEF02_MsmCqJ9Q&amp;sourceid=chrome&amp;ie=UTF-8&amp;ved=2ahUKEwiQvYns4-mRAxUNke4BHV5fC2EQgK4QegYIAQgAEB4\">Glycosyltransferases</a></strong>: Add sugar units (e.g., UDP-glucose pyrophosphorylase)<br><strong><a href=\"https://www.google.com/search?q=Acyltransferases&amp;rlz=1C1RXMK_enUS1069US1069&amp;oq=transferase+examples&amp;gs_lcrp=EgZjaHJvbWUqBwgAEAAYgAQyBwgAEAAYgAQyBwgBEAAYgAQyCAgCEAAYFhgeMggIAxAAGBYYHjIICAQQABgWGB4yCAgFEAAYFhgeMggIBhAAGBYYHjIICAcQABgWGB4yDQgIEAAYhgMYgAQYigUyCggJEAAYgAQYogTSAQg0MDIwajBqOagCBrACAfEF02_MsmCqJ9Q&amp;sourceid=chrome&amp;ie=UTF-8&amp;ved=2ahUKEwiQvYns4-mRAxUNke4BHV5fC2EQgK4QegYIAQgAECE\">Acyltransferases</a></strong>: Transfer acyl groups (e.g., Acyl-CoA:Cholesterol Acyltransferase)",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-1eee00f765ae71815f918b0fd3afaf32aa76b91a.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><div><div><div><div>Exchange theory believes that social interactions change over time.</div></div></div></div><div><div><div><div>It also assumes that rewarding actions will be repeated, but the reward diminishes over time.</div></div></div></div>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br>So first K has to do with Keq, second K has to do with K<span style=\"font-size: 16.6667px;\"><sub>max</sub>!</span>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-48ea6045de3390b8ebd374ab41dbc553c3b468c2.jpg\"><br><img src=\"paste-f8e7263b4ba3fb98cabef54270397e79ce2745cf.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br>Also some lineweaver burk plots!<br><b><span style=\"font-weight: 400;\"><img src=\"paste-250978189202fd403492fe902a25bbe016c82ecc.png\"></span></b>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img alt=\"Principal Quantum Number: Definition, Determination, &amp; Value\" src=\"Principal-Quantum-Number.jpg\"><img alt=\"Quantum Numbers Question : r/Mcat\" src=\"2ylg39b3ny531.png\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img alt=\"Introduction to IR Spectroscopy: How to Read an Infrared Spectroscopy Graph\" src=\"maxresdefault-76724c77fd9d22ba888957749d1f6ce1148dd292.jpg\"><br><img src=\"paste-d3894330111a84d66604560517e4a95fb6adaea9.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\nAlso <b>independent assortment</b> occurs during&nbsp;<b>Metaphase I</b>&nbsp;of meiosis, when homologous chromosome pairs randomly line up at the metaphase plate, ensuring each new cell gets a mix of maternal and paternal chromosomes.<br><b><br>Crossing over</b> happens <b>Prophase I</b>.",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br>Aldehyde gets oxidized to carboxylic acid",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\neV = electron volt. A unit of potential.",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br><img src=\"paste-5c89481faccc72cc9ec690d1c80050c7691e5aab.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-bc0a08ae11c4340d362e42dcaae1504ce5cac956.jpg\"><br>And increases resistance",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<h1><img src=\"paste-b92ab6ce4626ad9787d392e6696d22b9addbb17d.jpg\"><br></h1>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img alt=\"Iodine‐Mediated Peptide Disulfide Bridging is Reversible and  Sequence‐Dependent in Solid Support: Use of TEMPO in the Reaction Resolves  the Challenge - Chowdhury - 2025 - Asian Journal of Organic Chemistry -  Wiley Online Library\" src=\"https://aces.onlinelibrary.wiley.com/cms/asset/3c41f9d4-886f-4281-9f8c-5a17164df1fe/ajoc202500412-gra-0001-m.jpg?trick=1766533537011\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img alt=\"Hybrid Atomic Orbitals | Chemistry for Majors\" src=\"CNX_Chem_08_02_HybrdOrbit1.jpg\"><img src=\"paste-93d4a8d22972ad37f528aa88c4ca9409ff23adb5.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img src=\"paste-7474ce94f73950212ad1946a1f64c46bcb2a5201.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br>Action potential causes Sarcoplasmic reticulum to release Ca<sup>2+</sup> into cytoplasm.<br>Calcium binds to troponin, freeing tropomyosin to do stuff",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<strong><br>A steroid is composed of a 6-6-6-5 fused ring assembly, which is a total of 4 fused rings</strong>",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<br><br>Confusion point: cortisol increases heart rate. Well... it does so indirectly, and because of this there's other places that could differ in the pathway for glucocortocoids.&nbsp;",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n<img alt=\"Transverse Tubular System - an overview | ScienceDirect Topics\" src=\"3-s2.0-B9780128145937000219-f21-04-9780128145937.jpg\">",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\nDissociation of the myosin head from the actin filament requires the binding of ATP (I).<br>&nbsp;Attachment of the myosin head to the actin filament requires calcium and a troponin/tropomyosin shift (II). <br>The conformational changes that move actin and myosin relative to one another require that ATP be hydrolyzed, for these changes occur upon release of ADP and Pi by the myosin head (III). <br>Binding of troponin to actin does not require the hydrolysis of ATP (IV). <br>Release of calcium from the sarcoplasmic reticulum also does not require ATP hydrolysis. <br>The reuptake of calcium into the sarcoplasmic reticulum occurs via an ATP-hydrolyzing pump that moves calcium against its concentration gradient (VI). Thus, C is the correct response.",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    },
+    {
+        "back": "<br>\n",
+        "css": ".card {\n    font-family: arial;\n    font-size: 20px;\n    line-height: 1.5;\n    text-align: center;\n    color: black;\n    background-color: white;\n}\n.cloze {\n    font-weight: bold;\n    color: blue;\n}\n.nightMode .cloze {\n    color: lightblue;\n}\n",
+        "front": ""
+    }
+]

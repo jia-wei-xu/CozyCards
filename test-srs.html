@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CozyCards SRS Algorithm Tests — Phase 2</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 2rem; }
+    h1 { margin-bottom: 0.5rem; color: #f8b4c8; }
+    .info { color: #888; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    #log { font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.82rem; line-height: 1.7; white-space: pre-wrap; max-height: 80vh; overflow-y: auto; }
+    .pass { color: #66bb6a; } .fail { color: #ef5350; } .info-line { color: #64b5f6; }
+    .dim { color: #666; }
+    button { background: #f8b4c8; color: #1a1a2e; border: none; padding: 0.6rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem; margin-bottom: 1.5rem; }
+    button:hover { background: #f9c6d5; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .summary { margin-top: 1rem; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1.1rem; }
+    .summary.pass-bg { background: rgba(102,187,106,0.15); color: #66bb6a; }
+    .summary.fail-bg { background: rgba(239,83,80,0.15); color: #ef5350; }
+  </style>
+</head>
+<body>
+  <h1>🧪 Phase 2: SRS Algorithm Unit Tests</h1>
+  <p class="info">Tests the core SRS engine (computeNext, formatDuration, cardId) in isolation — no network calls needed.</p>
+  <button id="runBtn" onclick="runTests()">Run All Tests</button>
+  <div id="log"></div>
+  <div id="summary"></div>
+
+<script type="module">
+// ═══════════════════════════════════════════════════════════════════
+// Import the pure functions by inlining a minimal copy of the logic.
+// (We can't import from .jsx in a plain HTML file, so we replicate
+//  the testable core here — this ensures the ALGORITHM is correct.)
+// ═══════════════════════════════════════════════════════════════════
+
+const RATING = { AGAIN: 0, HARD: 1, GOOD: 2, EASY: 3 };
+const STATE  = { NEW: 0, LEARNING: 1, REVIEW: 2, RELEARNING: 3 };
+
+const DEFAULTS = {
+  dailyNewCap: 20, dailyReviewCap: 200,
+  learningSteps: [1, 10], relearningSteps: [10],
+  graduatingInterval: 1, easyInterval: 4,
+  startingEase: 2.5, easyBonus: 1.3, hardMultiplier: 1.2,
+  intervalModifier: 1.0, newCardOrder: "sequential",
+  maxInterval: 36500, lapseNewInterval: 0.0,
+  learnAheadMinutes: 20,
+};
+
+function minutes(m) { return m * 60000; }
+function days(d)    { return d * 86400000; }
+function now()      { return Date.now(); }
+
+function fuzz(interval) {
+  if (interval < 3) return interval;
+  const r = Math.max(1, Math.round(interval * 0.05));
+  return interval + Math.floor(Math.random() * (r * 2 + 1)) - r;
+}
+
+function newCardProgress() {
+  return { state: STATE.NEW, step: 0, ease: 0, interval: 0, due: 0, lapses: 0, reps: 0 };
+}
+
+// Exact copy of computeNext from useSpacedRepetition.js
+function computeNext(card, rating, cfg = DEFAULTS) {
+  const c = { ...card };
+  const t = now();
+  switch (c.state) {
+    case STATE.NEW:
+    case STATE.LEARNING: {
+      const steps = cfg.learningSteps;
+      if (rating === RATING.AGAIN) {
+        c.step = 0; c.state = STATE.LEARNING; c.due = t + minutes(steps[0] ?? 1);
+      } else if (rating === RATING.HARD) {
+        // Anki Hard logic:
+        //   Step 0 with ≥2 steps → average of steps[0] and steps[1]
+        //   Step 0 with 1 step  → 1.5× that step
+        //   Any other step       → repeat current step
+        c.state = STATE.LEARNING;
+        let hardDelay;
+        if (c.step === 0) {
+          if (steps.length >= 2) hardDelay = (steps[0] + steps[1]) / 2;
+          else hardDelay = (steps[0] ?? 1) * 1.5;
+        } else {
+          hardDelay = steps[c.step] ?? steps[steps.length - 1] ?? 1;
+        }
+        c.due = t + minutes(hardDelay);
+      } else if (rating === RATING.GOOD) {
+        const nextStep = c.step + 1;
+        if (nextStep >= steps.length) {
+          c.state = STATE.REVIEW; c.ease = cfg.startingEase;
+          c.interval = cfg.graduatingInterval; c.due = t + days(cfg.graduatingInterval);
+        } else {
+          c.step = nextStep; c.state = STATE.LEARNING; c.due = t + minutes(steps[nextStep]);
+        }
+      } else if (rating === RATING.EASY) {
+        c.state = STATE.REVIEW; c.ease = cfg.startingEase;
+        c.interval = cfg.easyInterval; c.due = t + days(cfg.easyInterval);
+      }
+      break;
+    }
+    case STATE.REVIEW: {
+      c.reps += 1;
+      if (rating === RATING.AGAIN) {
+        c.lapses += 1; c.state = STATE.RELEARNING; c.step = 0;
+        c.due = t + minutes((cfg.relearningSteps[0] ?? 10));
+        if (cfg.lapseNewInterval > 0) c.interval = Math.max(1, Math.round(c.interval * cfg.lapseNewInterval));
+        else c.interval = 1;
+        c.ease = Math.max(1.3, c.ease - 0.2);
+      } else if (rating === RATING.HARD) {
+        c.ease = Math.max(1.3, c.ease - 0.15);
+        const raw = c.interval * cfg.hardMultiplier * cfg.intervalModifier;
+        c.interval = Math.min(cfg.maxInterval, Math.max(c.interval + 1, fuzz(Math.round(raw))));
+        c.due = t + days(c.interval);
+      } else if (rating === RATING.GOOD) {
+        const raw = c.interval * c.ease * cfg.intervalModifier;
+        c.interval = Math.min(cfg.maxInterval, Math.max(c.interval + 1, fuzz(Math.round(raw))));
+        c.due = t + days(c.interval);
+      } else if (rating === RATING.EASY) {
+        c.ease += 0.15;
+        const raw = c.interval * c.ease * cfg.easyBonus * cfg.intervalModifier;
+        c.interval = Math.min(cfg.maxInterval, Math.max(c.interval + 1, fuzz(Math.round(raw))));
+        c.due = t + days(c.interval);
+      }
+      break;
+    }
+    case STATE.RELEARNING: {
+      const reSteps = cfg.relearningSteps;
+      if (rating === RATING.AGAIN) {
+        c.step = 0; c.due = t + minutes(reSteps[0] ?? 10);
+      } else if (rating === RATING.HARD) {
+        // Same Anki Hard logic as learning
+        let hardDelay;
+        if (c.step === 0) {
+          if (reSteps.length >= 2) hardDelay = (reSteps[0] + reSteps[1]) / 2;
+          else hardDelay = (reSteps[0] ?? 10) * 1.5;
+        } else {
+          hardDelay = reSteps[c.step] ?? reSteps[reSteps.length - 1] ?? 10;
+        }
+        c.due = t + minutes(hardDelay);
+      } else if (rating === RATING.GOOD) {
+        const ns = c.step + 1;
+        if (ns >= reSteps.length) { c.state = STATE.REVIEW; c.due = t + days(c.interval); }
+        else { c.step = ns; c.due = t + minutes(reSteps[ns]); }
+      } else if (rating === RATING.EASY) {
+        c.state = STATE.REVIEW;
+        c.interval = Math.max(c.interval, cfg.easyInterval);
+        c.due = t + days(c.interval);
+      }
+      break;
+    }
+  }
+  return c;
+}
+
+// formatDuration
+function formatDuration(ms) {
+  if (ms <= 0) return "<1m";
+  const totalSec = Math.round(ms / 1000);
+  if (totalSec < 60) return "<1m";
+  const totalMin = Math.round(totalSec / 60);
+  if (totalMin < 60) return `${totalMin}m`;
+  const totalHr = Math.round(totalMin / 60);
+  if (totalHr < 24) return `${totalHr}h`;
+  const totalDays = Math.round(totalHr / 24);
+  if (totalDays < 30) return `${totalDays}d`;
+  const totalMo = Math.round(totalDays / 30);
+  if (totalMo < 12) return `${totalMo}mo`;
+  const totalYr = +(totalDays / 365).toFixed(1);
+  return `${totalYr}y`;
+}
+
+// cardId — djb2 hash
+function djb2Hash(str) {
+  let hash = 5381;
+  for (let i = 0; i < str.length; i++) hash = ((hash << 5) + hash + str.charCodeAt(i)) | 0;
+  return (hash >>> 0).toString(16).padStart(8, "0");
+}
+function generateCardIds(cards) {
+  const seen = new Map();
+  const ids = [];
+  for (const card of cards) {
+    const raw = `${card.front ?? ""}\x00${card.back ?? ""}`;
+    const hash = djb2Hash(raw);
+    const count = seen.get(hash) || 0;
+    seen.set(hash, count + 1);
+    ids.push(count === 0 ? `c_${hash}` : `c_${hash}_${count}`);
+  }
+  return ids;
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// Test harness
+// ═══════════════════════════════════════════════════════════════════
+
+const logEl = document.getElementById("log");
+const summaryEl = document.getElementById("summary");
+let passed = 0, failed = 0;
+
+function log(msg, cls = "") {
+  const span = document.createElement("span");
+  span.className = cls; span.textContent = msg + "\n";
+  logEl.appendChild(span);
+}
+function assert(cond, label) {
+  if (cond) { passed++; log(`  ✓ ${label}`, "pass"); }
+  else      { failed++; log(`  ✗ ${label}`, "fail"); }
+}
+function approxEq(a, b, tolerance = 0.01) { return Math.abs(a - b) <= tolerance; }
+function withinMs(actual, expected, toleranceMs = 5000) { return Math.abs(actual - expected) <= toleranceMs; }
+
+window.runTests = function() {
+  document.getElementById("runBtn").disabled = true;
+  logEl.innerHTML = ""; summaryEl.innerHTML = "";
+  passed = 0; failed = 0;
+
+  // =================================================================
+  // GROUP 1: formatDuration
+  // =================================================================
+  log("─── formatDuration ───", "info-line");
+  assert(formatDuration(0) === "<1m",       "0ms → <1m");
+  assert(formatDuration(-1000) === "<1m",   "negative → <1m");
+  assert(formatDuration(30000) === "<1m",   "30s → <1m");
+  assert(formatDuration(60000) === "1m",    "60s → 1m");
+  assert(formatDuration(600000) === "10m",  "10min → 10m");
+  assert(formatDuration(3600000) === "1h",  "1hr → 1h");
+  assert(formatDuration(86400000) === "1d", "24hr → 1d");
+  assert(formatDuration(86400000 * 7) === "7d", "7 days → 7d");
+  assert(formatDuration(86400000 * 45) === "2mo", "45 days → 2mo (rounded)");
+  assert(formatDuration(86400000 * 400) === "1.1y", "400 days → ~1.1y");
+
+  // =================================================================
+  // GROUP 2: Card IDs (djb2 hash + dedup)
+  // =================================================================
+  log("\n─── Card ID generation ───", "info-line");
+  {
+    const cards = [
+      { front: "Q1", back: "A1" },
+      { front: "Q2", back: "A2" },
+      { front: "Q1", back: "A1" }, // duplicate
+      { front: "Q3", back: "A3" },
+      { front: "Q1", back: "A1" }, // another duplicate
+    ];
+    const ids = generateCardIds(cards);
+    assert(ids.length === 5, "5 IDs for 5 cards");
+    assert(ids[0].startsWith("c_"), "IDs start with c_");
+    assert(ids[0] === ids[0], "same card → same hash (trivial)");
+    assert(ids[0] !== ids[1], "different cards → different IDs");
+    assert(ids[0] !== ids[2], "duplicate card gets different ID (suffixed)");
+    assert(ids[2].includes("_1"), "first duplicate has _1 suffix");
+    assert(ids[4].includes("_2"), "second duplicate has _2 suffix");
+
+    // Deterministic: same input → same output
+    const ids2 = generateCardIds(cards);
+    assert(JSON.stringify(ids) === JSON.stringify(ids2), "IDs are deterministic");
+
+    // Survives reordering
+    const reordered = [cards[1], cards[0], cards[2], cards[3], cards[4]];
+    const reIds = generateCardIds(reordered);
+    assert(reIds[0] === ids[1], "card Q2 keeps its ID after reorder");
+    assert(reIds[1] === ids[0], "card Q1 keeps its ID after reorder");
+  }
+
+  // Edge cases
+  {
+    const empty = generateCardIds([{ front: "", back: "" }]);
+    assert(empty.length === 1 && empty[0].startsWith("c_"), "empty front/back still gets valid ID");
+
+    const unicode = generateCardIds([{ front: "こんにちは", back: "🌸" }]);
+    assert(unicode[0].startsWith("c_"), "unicode content produces valid ID");
+  }
+
+  // =================================================================
+  // GROUP 3: NEW card → LEARNING → REVIEW lifecycle
+  // =================================================================
+  log("\n─── NEW → LEARNING → REVIEW lifecycle ───", "info-line");
+  {
+    let c = newCardProgress();
+    assert(c.state === STATE.NEW, "initial state is NEW");
+
+    // Press Good on new card → moves to learning step 1 (10min)
+    c = computeNext(c, RATING.GOOD);
+    assert(c.state === STATE.LEARNING, "Good on NEW → LEARNING");
+    assert(c.step === 1, "Good on NEW → step 1");
+    assert(withinMs(c.due - now(), minutes(10), 5000), "due in ~10 minutes");
+
+    // Press Good again → graduates (step 2 >= learningSteps.length=2)
+    c = computeNext(c, RATING.GOOD);
+    assert(c.state === STATE.REVIEW, "Good on last learning step → REVIEW");
+    assert(c.interval === 1, "graduating interval = 1 day");
+    assert(approxEq(c.ease, 2.5), "ease set to startingEase (2.5)");
+    assert(withinMs(c.due - now(), days(1), 5000), "due in ~1 day");
+  }
+
+  // =================================================================
+  // GROUP 4: NEW → Easy (instant graduation)
+  // =================================================================
+  log("\n─── NEW → Easy (instant graduation) ───", "info-line");
+  {
+    let c = newCardProgress();
+    c = computeNext(c, RATING.EASY);
+    assert(c.state === STATE.REVIEW, "Easy on NEW → REVIEW (instant graduation)");
+    assert(c.interval === 4, "Easy interval = 4 days");
+    assert(withinMs(c.due - now(), days(4), 5000), "due in ~4 days");
+  }
+
+  // =================================================================
+  // GROUP 5: NEW → Again stays in learning
+  // =================================================================
+  log("\n─── NEW → Again ───", "info-line");
+  {
+    let c = newCardProgress();
+    c = computeNext(c, RATING.AGAIN);
+    assert(c.state === STATE.LEARNING, "Again on NEW → LEARNING");
+    assert(c.step === 0, "Again → step 0");
+    assert(withinMs(c.due - now(), minutes(1), 5000), "due in ~1 minute");
+  }
+
+  // =================================================================
+  // GROUP 6: NEW → Hard stays in learning
+  // =================================================================
+  log("\n─── NEW → Hard ───", "info-line");
+  {
+    let c = newCardProgress();
+    c = computeNext(c, RATING.HARD);
+    assert(c.state === STATE.LEARNING, "Hard on NEW → LEARNING");
+    assert(c.step === 0, "Hard → stays at step 0");
+    // Average of steps[0]=1 and steps[1]=10 → 5.5 min
+    assert(withinMs(c.due - now(), minutes(5.5), 5000), "due in ~5.5 minutes");
+  }
+
+  // =================================================================
+  // GROUP 7: REVIEW → Good (interval grows)
+  // =================================================================
+  log("\n─── REVIEW → Good (interval growth) ───", "info-line");
+  {
+    // Simulate a card in review state with interval=1, ease=2.5
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 1, due: 0, lapses: 0, reps: 0 };
+    c = computeNext(c, RATING.GOOD);
+    assert(c.state === STATE.REVIEW, "still in REVIEW");
+    // interval = max(1+1, round(1 * 2.5)) = max(2, 3) = 3 (±fuzz)
+    assert(c.interval >= 2 && c.interval <= 4, `interval grew to ${c.interval} (expected ~3)`);
+    assert(approxEq(c.ease, 2.5), "ease unchanged after Good");
+    assert(c.reps === 1, "reps incremented");
+
+    // Another Good
+    c = computeNext(c, RATING.GOOD);
+    // interval = max(prev+1, round(prev * 2.5))
+    assert(c.interval >= 4, `interval grew further to ${c.interval}`);
+    assert(c.reps === 2, "reps=2");
+  }
+
+  // =================================================================
+  // GROUP 8: REVIEW → Hard (ease drops, slower growth)
+  // =================================================================
+  log("\n─── REVIEW → Hard ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 10, due: 0, lapses: 0, reps: 0 };
+    c = computeNext(c, RATING.HARD);
+    assert(approxEq(c.ease, 2.35), `ease decreased to ${c.ease} (expected 2.35)`);
+    // interval = max(11, round(10 * 1.2)) = max(11, 12) → 12 ± fuzz
+    assert(c.interval >= 11 && c.interval <= 14, `interval ${c.interval} (expected ~12)`);
+  }
+
+  // =================================================================
+  // GROUP 9: REVIEW → Easy (ease up, bonus)
+  // =================================================================
+  log("\n─── REVIEW → Easy ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 10, due: 0, lapses: 0, reps: 0 };
+    c = computeNext(c, RATING.EASY);
+    assert(approxEq(c.ease, 2.65), `ease increased to ${c.ease} (expected 2.65)`);
+    // interval = max(11, round(10 * 2.65 * 1.3)) = max(11, round(34.45)) = 34 ± fuzz
+    assert(c.interval >= 30 && c.interval <= 40, `interval ${c.interval} (expected ~34)`);
+  }
+
+  // =================================================================
+  // GROUP 10: REVIEW → Again (lapse → RELEARNING)
+  // =================================================================
+  log("\n─── REVIEW → Again (lapse) ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 10, due: 0, lapses: 0, reps: 5 };
+    c = computeNext(c, RATING.AGAIN);
+    assert(c.state === STATE.RELEARNING, "Again on REVIEW → RELEARNING");
+    assert(c.step === 0, "step reset to 0");
+    assert(c.lapses === 1, "lapses incremented");
+    assert(c.interval === 1, "interval reset to 1 (lapseNewInterval=0)");
+    assert(approxEq(c.ease, 2.3), `ease decreased to ${c.ease} (expected 2.3)`);
+    assert(withinMs(c.due - now(), minutes(10), 5000), "due in ~10 minutes (relearningSteps[0])");
+  }
+
+  // =================================================================
+  // GROUP 11: RELEARNING → Good → back to REVIEW
+  // =================================================================
+  log("\n─── RELEARNING → Good → REVIEW ───", "info-line");
+  {
+    let c = { state: STATE.RELEARNING, step: 0, ease: 2.3, interval: 1, due: 0, lapses: 1, reps: 5 };
+    // Default relearningSteps has 1 step [10], so Good at step 0 → step 1 → graduates
+    c = computeNext(c, RATING.GOOD);
+    assert(c.state === STATE.REVIEW, "Good on last relearning step → REVIEW");
+    assert(c.interval === 1, "interval stays at 1 (set during lapse)");
+    assert(withinMs(c.due - now(), days(1), 5000), "due in ~1 day");
+  }
+
+  // =================================================================
+  // GROUP 12: RELEARNING → Again stays in relearning
+  // =================================================================
+  log("\n─── RELEARNING → Again ───", "info-line");
+  {
+    let c = { state: STATE.RELEARNING, step: 0, ease: 2.0, interval: 1, due: 0, lapses: 2, reps: 5 };
+    c = computeNext(c, RATING.AGAIN);
+    assert(c.state === STATE.RELEARNING, "Again in RELEARNING → stays RELEARNING");
+    assert(c.step === 0, "step reset to 0");
+    assert(withinMs(c.due - now(), minutes(10), 5000), "due in ~10 min");
+  }
+
+  // =================================================================
+  // GROUP 13: RELEARNING → Easy jumps back to review
+  // =================================================================
+  log("\n─── RELEARNING → Easy ───", "info-line");
+  {
+    let c = { state: STATE.RELEARNING, step: 0, ease: 2.3, interval: 1, due: 0, lapses: 1, reps: 5 };
+    c = computeNext(c, RATING.EASY);
+    assert(c.state === STATE.REVIEW, "Easy in RELEARNING → REVIEW");
+    assert(c.interval >= 4, `interval max(1, easyInterval=4) → ${c.interval}`);
+  }
+
+  // =================================================================
+  // GROUP 14: Ease floor at 1.3
+  // =================================================================
+  log("\n─── Ease floor ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 1.35, interval: 5, due: 0, lapses: 0, reps: 3 };
+    c = computeNext(c, RATING.AGAIN); // ease -= 0.2
+    assert(c.ease >= 1.3, `ease ${c.ease} never drops below 1.3`);
+    c = { state: STATE.REVIEW, step: 0, ease: 1.3, interval: 5, due: 0, lapses: 0, reps: 3 };
+    c = computeNext(c, RATING.HARD); // ease -= 0.15
+    assert(c.ease >= 1.3, `ease ${c.ease} stays at floor after Hard`);
+  }
+
+  // =================================================================
+  // GROUP 15: maxInterval cap
+  // =================================================================
+  log("\n─── maxInterval cap ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 30000, due: 0, lapses: 0, reps: 10 };
+    c = computeNext(c, RATING.EASY);
+    assert(c.interval <= DEFAULTS.maxInterval, `interval ${c.interval} ≤ maxInterval ${DEFAULTS.maxInterval}`);
+  }
+
+  // =================================================================
+  // GROUP 16: Custom config (different learning steps)
+  // =================================================================
+  log("\n─── Custom learning steps ───", "info-line");
+  {
+    const customCfg = { ...DEFAULTS, learningSteps: [1, 5, 15] };
+    let c = newCardProgress();
+
+    c = computeNext(c, RATING.GOOD, customCfg); // step 0 → 1
+    assert(c.step === 1, "step 1");
+    assert(withinMs(c.due - now(), minutes(5), 5000), "due in ~5 min (step 1)");
+
+    c = computeNext(c, RATING.GOOD, customCfg); // step 1 → 2
+    assert(c.step === 2, "step 2");
+    assert(withinMs(c.due - now(), minutes(15), 5000), "due in ~15 min (step 2)");
+
+    c = computeNext(c, RATING.GOOD, customCfg); // step 2 → graduate
+    assert(c.state === STATE.REVIEW, "graduates after step 2");
+  }
+
+  // =================================================================
+  // GROUP 17: Multiple lapses don't break state
+  // =================================================================
+  log("\n─── Multiple lapses stability ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 30, due: 0, lapses: 0, reps: 10 };
+    for (let i = 0; i < 5; i++) {
+      c = computeNext(c, RATING.AGAIN);
+      assert(c.state === STATE.RELEARNING, `lapse ${i + 1} → RELEARNING`);
+      c = computeNext(c, RATING.GOOD); // graduate back
+      assert(c.state === STATE.REVIEW, `re-graduated after lapse ${i + 1}`);
+    }
+    assert(c.lapses === 5, `5 lapses tracked (got ${c.lapses})`);
+    assert(c.ease >= 1.3, `ease ${c.ease} stays above floor after 5 lapses`);
+  }
+
+  // =================================================================
+  // GROUP 18: Full lifecycle simulation (25 cards, mixed ratings)
+  // =================================================================
+  log("\n─── Full lifecycle simulation (25 cards) ───", "info-line");
+  {
+    const cards = Array.from({ length: 25 }, (_, i) => newCardProgress());
+    const ratings = [RATING.GOOD, RATING.GOOD, RATING.HARD, RATING.EASY, RATING.AGAIN];
+    let allValid = true;
+
+    for (let i = 0; i < cards.length; i++) {
+      const r = ratings[i % ratings.length];
+      cards[i] = computeNext(cards[i], r);
+      if (cards[i].due <= 0) { allValid = false; break; }
+    }
+    assert(allValid, "all 25 cards have valid due dates after first review");
+
+    // Review each card a second time
+    for (let i = 0; i < cards.length; i++) {
+      cards[i] = computeNext(cards[i], RATING.GOOD);
+    }
+    const states = new Set(cards.map(c => c.state));
+    assert(states.size >= 1, `cards in ${states.size} unique state(s) after 2 reviews`);
+
+    // No card has negative interval
+    const negInt = cards.some(c => c.interval < 0);
+    assert(!negInt, "no card has negative interval");
+  }
+
+  // =================================================================
+  // GROUP 19: computeNext doesn't mutate input
+  // =================================================================
+  log("\n─── Immutability ───", "info-line");
+  {
+    const original = newCardProgress();
+    const origStr = JSON.stringify(original);
+    computeNext(original, RATING.GOOD);
+    assert(JSON.stringify(original) === origStr, "computeNext does not mutate input object");
+  }
+
+  // =================================================================
+  // GROUP 20: lapseNewInterval > 0 preserves some interval
+  // =================================================================
+  log("\n─── lapseNewInterval > 0 ───", "info-line");
+  {
+    const cfg2 = { ...DEFAULTS, lapseNewInterval: 0.5 };
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 20, due: 0, lapses: 0, reps: 5 };
+    c = computeNext(c, RATING.AGAIN, cfg2);
+    assert(c.interval === 10, `interval with lapseNewInterval=0.5: ${c.interval} (expected 10)`);
+  }
+
+  // =================================================================
+  // GROUP 21: Button labels compute correctly
+  // =================================================================
+  log("\n─── Button labels ───", "info-line");
+  {
+    const c = newCardProgress();
+    const labels = {};
+    for (const [name, value] of Object.entries(RATING)) {
+      const next = computeNext(c, value);
+      labels[name] = formatDuration(next.due - now());
+    }
+    assert(labels.AGAIN === "1m" || labels.AGAIN === "<1m", `Again label = "${labels.AGAIN}"`);
+    assert(labels.GOOD === "10m", `Good label = "${labels.GOOD}" (expected 10m)`);
+    assert(labels.EASY === "4d", `Easy label = "${labels.EASY}" (expected 4d)`);
+    log(`  Labels: Again=${labels.AGAIN}, Hard=${labels.HARD}, Good=${labels.GOOD}, Easy=${labels.EASY}`, "dim");
+  }
+
+  // =================================================================
+  // GROUP 22: Edge — empty learning steps (graduate immediately)
+  // =================================================================
+  log("\n─── Empty learning steps ───", "info-line");
+  {
+    const cfg3 = { ...DEFAULTS, learningSteps: [] };
+    let c = newCardProgress();
+    c = computeNext(c, RATING.GOOD, cfg3);
+    assert(c.state === STATE.REVIEW, "Good with empty steps → instant graduation");
+  }
+
+  // =================================================================
+  // GROUP 23: Very long review chain doesn't overflow
+  // =================================================================
+  log("\n─── Long review chain (no overflow) ───", "info-line");
+  {
+    let c = { state: STATE.REVIEW, step: 0, ease: 2.5, interval: 1, due: 0, lapses: 0, reps: 0 };
+    for (let i = 0; i < 100; i++) {
+      c = computeNext(c, RATING.GOOD);
+    }
+    assert(Number.isFinite(c.interval), `interval is finite: ${c.interval}`);
+    assert(c.interval <= DEFAULTS.maxInterval, `interval capped: ${c.interval}`);
+    assert(Number.isFinite(c.due), "due date is finite");
+    assert(c.reps === 100, `reps tracked correctly: ${c.reps}`);
+  }
+
+  // =================================================================
+  // GROUP 24: Hard button — Anki-correct behavior on step 0 (2+ steps)
+  // =================================================================
+  log("\n─── Hard on step 0 (2+ steps: avg of steps[0] and steps[1]) ───", "info-line");
+  {
+    // Default steps [1, 10]: Hard on step 0 → avg(1, 10) = 5.5m
+    let c = newCardProgress();
+    c = computeNext(c, RATING.HARD);
+    assert(c.state === STATE.LEARNING, "Hard on NEW → LEARNING");
+    assert(c.step === 0, "Hard on step 0 stays at step 0");
+    assert(withinMs(c.due - now(), minutes(5.5), 5000), "due in ~5.5m (avg of 1+10)");
+  }
+
+  // =================================================================
+  // GROUP 25: Hard button — Anki-correct behavior on step 0 (1 step)
+  // =================================================================
+  log("\n─── Hard on step 0 (single step: 1.5× that step) ───", "info-line");
+  {
+    const singleStepCfg = { ...DEFAULTS, learningSteps: [5] };
+    let c = newCardProgress();
+    c = computeNext(c, RATING.HARD, singleStepCfg);
+    assert(c.state === STATE.LEARNING, "Hard on NEW → LEARNING");
+    assert(c.step === 0, "stays at step 0");
+    assert(withinMs(c.due - now(), minutes(7.5), 5000), "due in ~7.5m (1.5 × 5)");
+  }
+
+  // =================================================================
+  // GROUP 26: Hard button — repeats current step (not avg) on step > 0
+  // =================================================================
+  log("\n─── Hard on step > 0 (repeats current step per Anki) ───", "info-line");
+  {
+    const threeStepCfg = { ...DEFAULTS, learningSteps: [1, 10, 60] };
+    // Advance to step 1
+    let c = newCardProgress();
+    c = computeNext(c, RATING.GOOD, threeStepCfg); // step 0 → step 1
+    assert(c.step === 1, "now at step 1");
+
+    // Hard on step 1 should repeat step 1 (10m), NOT avg(10,60)=35m
+    c = computeNext(c, RATING.HARD, threeStepCfg);
+    assert(c.step === 1, "Hard stays at step 1");
+    assert(withinMs(c.due - now(), minutes(10), 5000), "due in ~10m (repeats step 1, not avg)");
+
+    // Advance to step 2
+    c = computeNext(c, RATING.GOOD, threeStepCfg); // step 1 → step 2
+    assert(c.step === 2, "now at step 2");
+
+    // Hard on last step also repeats that step
+    c = computeNext(c, RATING.HARD, threeStepCfg);
+    assert(c.step === 2, "Hard stays at step 2");
+    assert(withinMs(c.due - now(), minutes(60), 5000), "due in ~60m (repeats step 2)");
+  }
+
+  // =================================================================
+  // GROUP 27: Hard on relearning — single step (1.5×)
+  // =================================================================
+  log("\n─── Hard on relearning (single step: 1.5×) ───", "info-line");
+  {
+    // Default relearningSteps is [10] (one step)
+    let c = { state: STATE.RELEARNING, step: 0, ease: 2.3, interval: 1, due: 0, lapses: 1, reps: 5 };
+    c = computeNext(c, RATING.HARD);
+    assert(c.state === STATE.RELEARNING, "still in RELEARNING");
+    assert(withinMs(c.due - now(), minutes(15), 5000), "due in ~15m (1.5 × 10)");
+  }
+
+  // =================================================================
+  // GROUP 28: Hard on relearning — multiple steps
+  // =================================================================
+  log("\n─── Hard on relearning (2 steps) ───", "info-line");
+  {
+    const multiRelearn = { ...DEFAULTS, relearningSteps: [5, 30] };
+    // Step 0: Hard = avg(5, 30) = 17.5m
+    let c = { state: STATE.RELEARNING, step: 0, ease: 2.3, interval: 1, due: 0, lapses: 1, reps: 5 };
+    c = computeNext(c, RATING.HARD, multiRelearn);
+    assert(withinMs(c.due - now(), minutes(17.5), 5000), "step 0: due in ~17.5m (avg of 5+30)");
+
+    // Advance to step 1 via Good
+    c = { state: STATE.RELEARNING, step: 0, ease: 2.3, interval: 1, due: 0, lapses: 1, reps: 5 };
+    c = computeNext(c, RATING.GOOD, multiRelearn);
+    assert(c.step === 1, "now at step 1");
+
+    // Hard on step 1: repeat step 1 (30m)
+    c = computeNext(c, RATING.HARD, multiRelearn);
+    assert(withinMs(c.due - now(), minutes(30), 5000), "step 1: due in ~30m (repeats step 1)");
+  }
+
+  // ── Summary ────────────────────────────────────────────────────
+  document.getElementById("runBtn").disabled = false;
+  log("\n" + "═".repeat(50));
+  const total = passed + failed;
+  const msg = `${passed}/${total} passed, ${failed} failed`;
+  log(msg, failed > 0 ? "fail" : "pass");
+  summaryEl.className = `summary ${failed > 0 ? "fail-bg" : "pass-bg"}`;
+  summaryEl.textContent = failed > 0 ? `❌ ${msg}` : `✅ ${msg} — All tests passed!`;
+};
+</script>
+</body>
+</html>

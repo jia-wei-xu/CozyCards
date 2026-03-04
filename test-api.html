@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CozyCards API Integration Tests</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #1a1a2e; color: #e0e0e0; padding: 2rem; }
+    h1 { margin-bottom: 1rem; color: #f8b4c8; }
+    .info { color: #888; margin-bottom: 1.5rem; font-size: 0.9rem; }
+    #log { font-family: 'Cascadia Code', 'Fira Code', monospace; font-size: 0.85rem; line-height: 1.7; white-space: pre-wrap; }
+    .pass { color: #66bb6a; } .fail { color: #ef5350; } .info-line { color: #64b5f6; }
+    .warn { color: #ffa726; } .dim { color: #666; }
+    button { background: #f8b4c8; color: #1a1a2e; border: none; padding: 0.6rem 1.5rem; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 1rem; margin-bottom: 1.5rem; }
+    button:hover { background: #f9c6d5; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .summary { margin-top: 1rem; padding: 1rem; border-radius: 8px; font-weight: 600; font-size: 1.1rem; }
+    .summary.pass-bg { background: rgba(102,187,106,0.15); color: #66bb6a; }
+    .summary.fail-bg { background: rgba(239,83,80,0.15); color: #ef5350; }
+  </style>
+</head>
+<body>
+  <h1>🧪 CozyCards API — Phase 1 Integration Tests</h1>
+  <p class="info">
+    Tests all Google Sheets API endpoints: CRUD for decks, user settings, and SRS progress.<br>
+    Make sure you've deployed the new Apps Script before running.
+  </p>
+  <button id="runBtn" onclick="runTests()">Run All Tests</button>
+  <div id="log"></div>
+  <div id="summary"></div>
+
+<script>
+const API_URL = "https://script.google.com/macros/s/AKfycbx1KJlD35OhrUHUIdwtrTvulqaHn74FSxX9uS__4pKSocPopzTei7PSSwgBBHiQAAT_/exec";
+
+const logEl = document.getElementById("log");
+const summaryEl = document.getElementById("summary");
+let passed = 0, failed = 0;
+
+function log(msg, cls = "") {
+  const span = document.createElement("span");
+  span.className = cls;
+  span.textContent = msg + "\n";
+  logEl.appendChild(span);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function assert(condition, label) {
+  if (condition) { passed++; log(`  ✓ ${label}`, "pass"); }
+  else           { failed++; log(`  ✗ ${label}`, "fail"); }
+}
+
+async function GET(params = {}) {
+  const url = new URL(API_URL);
+  Object.entries(params).forEach(([k, v]) => { if (v != null) url.searchParams.set(k, v); });
+  const res = await fetch(url);
+  return res.json();
+}
+
+async function POST(payload) {
+  const res = await fetch(API_URL, { method: "POST", body: JSON.stringify(payload) });
+  return res.json();
+}
+
+async function runTests() {
+  document.getElementById("runBtn").disabled = true;
+  logEl.innerHTML = "";
+  summaryEl.innerHTML = "";
+  passed = 0; failed = 0;
+
+  let testDeckId = null;
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 1: Create deck
+  // ──────────────────────────────────────────────────────────────
+  log("─── TEST 1: Create deck ───", "info-line");
+  try {
+    const res = await POST({
+      action: "create_deck",
+      deckName: "Integration Test Deck 🧪",
+      cards: [
+        { front: "Capital of France?", back: "Paris" },
+        { front: "2 + 2?", back: "4" },
+        { front: "Color of sky?", back: "Blue" }
+      ],
+      folder: "TestFolder"
+    });
+    assert(res.status === "success", "create_deck returns success");
+    assert(typeof res.deckId === "string" && res.deckId.startsWith("deck_"), "deckId is valid");
+    testDeckId = res.deckId;
+    log(`  → Created deck: ${testDeckId}`, "dim");
+  } catch (e) {
+    failed++; log(`  ✗ create_deck threw: ${e.message}`, "fail");
+  }
+
+  if (!testDeckId) {
+    log("\n⛔ Cannot continue without a deck. Is the Apps Script deployed?", "fail");
+    showSummary(); return;
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 2: Fetch all decks (should include new deck)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 2: Fetch all decks ───", "info-line");
+  try {
+    const res = await GET();
+    assert(res.status === "success", "getAllDecks returns success");
+    assert(Array.isArray(res.data), "data is an array");
+    const found = res.data.find(d => d.id === testDeckId);
+    assert(!!found, "new deck appears in list");
+    assert(found && found.name === "Integration Test Deck 🧪", "deck name matches");
+    assert(found && found.folder === "TestFolder", "folder column populated");
+    assert(found && Array.isArray(found.cards) && found.cards.length === 3, "cards array has 3 items");
+    log(`  → Total decks in sheet: ${res.data.length}`, "dim");
+  } catch (e) {
+    failed++; log(`  ✗ getAllDecks threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 3: Fetch single deck
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 3: Fetch single deck ───", "info-line");
+  try {
+    const res = await GET({ action: "get_deck", deckId: testDeckId });
+    assert(res.status === "success", "get_deck returns success");
+    assert(res.data && res.data.id === testDeckId, "returned correct deck");
+    assert(res.data.cards.length === 3, "cards count correct");
+    assert(res.data.folder === "TestFolder", "folder correct");
+  } catch (e) {
+    failed++; log(`  ✗ get_deck threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 3b: Fetch non-existent deck
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 3b: Fetch non-existent deck ───", "info-line");
+  try {
+    const res = await GET({ action: "get_deck", deckId: "deck_DOES_NOT_EXIST" });
+    assert(res.status === "error", "non-existent deck returns error");
+    assert(res.message && res.message.includes("not found"), "error message mentions not found");
+  } catch (e) {
+    failed++; log(`  ✗ get_deck (missing) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 4: Update deck name
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 4: Update deck name ───", "info-line");
+  try {
+    const res = await POST({ action: "update_deck", deckId: testDeckId, deckName: "Renamed Deck ✏️" });
+    assert(res.status === "success", "update_deck (name) returns success");
+
+    const verify = await GET({ action: "get_deck", deckId: testDeckId });
+    assert(verify.data.name === "Renamed Deck ✏️", "name actually updated");
+    assert(verify.data.cards.length === 3, "cards unchanged after name update");
+  } catch (e) {
+    failed++; log(`  ✗ update_deck (name) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 5: Update deck cards
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 5: Update deck cards ───", "info-line");
+  try {
+    const newCards = [
+      { front: "Updated Q1", back: "Updated A1" },
+      { front: "Updated Q2", back: "Updated A2" }
+    ];
+    const res = await POST({ action: "update_deck", deckId: testDeckId, cards: newCards });
+    assert(res.status === "success", "update_deck (cards) returns success");
+
+    const verify = await GET({ action: "get_deck", deckId: testDeckId });
+    assert(verify.data.cards.length === 2, "card count updated to 2");
+    assert(verify.data.cards[0].front === "Updated Q1", "first card front matches");
+  } catch (e) {
+    failed++; log(`  ✗ update_deck (cards) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 6: Update deck folder
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 6: Update deck folder ───", "info-line");
+  try {
+    const res = await POST({ action: "update_deck", deckId: testDeckId, folder: "Science/Biology" });
+    assert(res.status === "success", "update_deck (folder) returns success");
+
+    const verify = await GET({ action: "get_deck", deckId: testDeckId });
+    assert(verify.data.folder === "Science/Biology", "folder updated correctly");
+  } catch (e) {
+    failed++; log(`  ✗ update_deck (folder) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 6b: Update non-existent deck
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 6b: Update non-existent deck ───", "info-line");
+  try {
+    const res = await POST({ action: "update_deck", deckId: "deck_FAKE", deckName: "Nope" });
+    assert(res.status === "error", "update missing deck returns error");
+  } catch (e) {
+    failed++; log(`  ✗ update_deck (missing) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 7: Save user settings
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 7: Save user settings ───", "info-line");
+  try {
+    const res = await POST({
+      action: "save_user_settings",
+      settings: {
+        theme: "catppuccin-mocha",
+        daily_new_cap: 25,
+        daily_review_cap: 150,
+        background_url: "https://example.com/bg.jpg",
+        nested_obj: { a: 1, b: [2, 3] }
+      }
+    });
+    assert(res.status === "success", "save_user_settings returns success");
+  } catch (e) {
+    failed++; log(`  ✗ save_user_settings threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 8: Get user settings
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 8: Get user settings ───", "info-line");
+  try {
+    const res = await GET({ action: "get_user_settings" });
+    assert(res.status === "success", "get_user_settings returns success");
+    assert(res.data.theme === "catppuccin-mocha", "theme persisted");
+    assert(res.data.daily_new_cap === 25, "daily_new_cap persisted as number");
+    assert(res.data.daily_review_cap === 150, "daily_review_cap persisted");
+    assert(res.data.background_url === "https://example.com/bg.jpg", "string value persisted");
+    assert(res.data.nested_obj && res.data.nested_obj.a === 1, "nested object persisted");
+    assert(Array.isArray(res.data.nested_obj?.b) && res.data.nested_obj.b[1] === 3, "nested array persisted");
+  } catch (e) {
+    failed++; log(`  ✗ get_user_settings threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 9: Overwrite existing settings (merge)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 9: Update existing settings (merge) ───", "info-line");
+  try {
+    await POST({ action: "save_user_settings", settings: { theme: "nord", new_key: true } });
+    const res = await GET({ action: "get_user_settings" });
+    assert(res.data.theme === "nord", "theme overwritten to 'nord'");
+    assert(res.data.new_key === true, "new_key added");
+    assert(res.data.daily_new_cap === 25, "daily_new_cap unchanged (merge, not replace)");
+  } catch (e) {
+    failed++; log(`  ✗ settings merge threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 10: Save SRS progress
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 10: Save SRS progress ───", "info-line");
+  try {
+    const progressBlob = {
+      cards: {
+        "card_abc123": { state: "review", interval: 4, ease: 2.5, due: "2026-03-07T00:00:00Z" },
+        "card_def456": { state: "learning", step: 1, due: "2026-03-03T12:10:00Z" }
+      },
+      newCount: 18,
+      reviewCount: 42,
+      lastStudied: "2026-03-03T12:00:00Z"
+    };
+    const res = await POST({ action: "save_progress", deckId: testDeckId, progress: progressBlob });
+    assert(res.status === "success", "save_progress returns success");
+  } catch (e) {
+    failed++; log(`  ✗ save_progress threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 11: Get SRS progress (single deck)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 11: Get SRS progress (single deck) ───", "info-line");
+  try {
+    const res = await GET({ action: "get_progress", deckId: testDeckId });
+    assert(res.status === "success", "get_progress returns success");
+    assert(res.data && res.data.deckId === testDeckId, "correct deckId returned");
+    assert(res.data.progress && res.data.progress.newCount === 18, "newCount persisted");
+    assert(res.data.progress.cards.card_abc123.interval === 4, "card interval persisted");
+    assert(typeof res.data.lastUpdated === "string", "lastUpdated timestamp exists");
+  } catch (e) {
+    failed++; log(`  ✗ get_progress (single) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 12: Get SRS progress (all decks)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 12: Get SRS progress (all decks) ───", "info-line");
+  try {
+    const res = await GET({ action: "get_progress" });
+    assert(res.status === "success", "get_progress (all) returns success");
+    assert(Array.isArray(res.data), "data is an array");
+    const entry = res.data.find(p => p.deckId === testDeckId);
+    assert(!!entry, "test deck progress found in array");
+  } catch (e) {
+    failed++; log(`  ✗ get_progress (all) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 13: Update progress (overwrite)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 13: Update progress (overwrite) ───", "info-line");
+  try {
+    const updated = { cards: {}, newCount: 0, reviewCount: 0, lastStudied: "2026-03-03T13:00:00Z" };
+    await POST({ action: "save_progress", deckId: testDeckId, progress: updated });
+    const res = await GET({ action: "get_progress", deckId: testDeckId });
+    assert(res.data.progress.newCount === 0, "newCount overwritten to 0");
+    assert(Object.keys(res.data.progress.cards).length === 0, "cards cleared");
+  } catch (e) {
+    failed++; log(`  ✗ progress overwrite threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 14: Get progress for non-existent deck
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 14: Get progress for non-existent deck ───", "info-line");
+  try {
+    const res = await GET({ action: "get_progress", deckId: "deck_DOES_NOT_EXIST" });
+    assert(res.status === "success", "returns success (not error)");
+    assert(res.data === null, "data is null for missing deck (graceful)");
+  } catch (e) {
+    failed++; log(`  ✗ get_progress (missing) threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 15: Delete deck (also cleans up progress)
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 15: Delete deck ───", "info-line");
+  try {
+    const res = await POST({ action: "delete_deck", deckId: testDeckId });
+    assert(res.status === "success", "delete_deck returns success");
+
+    // Verify deck is gone
+    const verify = await GET({ action: "get_deck", deckId: testDeckId });
+    assert(verify.status === "error", "deck no longer exists");
+
+    // Verify progress is also gone
+    const prog = await GET({ action: "get_progress", deckId: testDeckId });
+    assert(prog.data === null, "progress also cleaned up");
+  } catch (e) {
+    failed++; log(`  ✗ delete_deck threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 16: Delete non-existent deck
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 16: Delete non-existent deck (idempotent check) ───", "info-line");
+  try {
+    const res = await POST({ action: "delete_deck", deckId: "deck_DOES_NOT_EXIST_999" });
+    assert(res.status === "error", "deleting missing deck returns error");
+  } catch (e) {
+    failed++; log(`  ✗ delete non-existent threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 17: Unknown action
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 17: Unknown action ───", "info-line");
+  try {
+    const res = await POST({ action: "banana_split" });
+    assert(res.status === "error", "unknown action returns error");
+    assert(res.message && res.message.includes("Unknown"), "error mentions unknown action");
+  } catch (e) {
+    failed++; log(`  ✗ unknown action threw: ${e.message}`, "fail");
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 18: Edge case — empty deck name, empty cards
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 18: Edge cases ───", "info-line");
+  let edgeDeckId = null;
+  try {
+    const res = await POST({ action: "create_deck", deckName: "", cards: [] });
+    assert(res.status === "success", "empty name/cards allowed");
+    edgeDeckId = res.deckId;
+
+    const verify = await GET({ action: "get_deck", deckId: edgeDeckId });
+    assert(verify.data.name === "", "empty name stored correctly");
+    assert(verify.data.cards.length === 0, "empty cards array stored");
+    assert(verify.data.folder === "", "default folder is empty string");
+  } catch (e) {
+    failed++; log(`  ✗ edge case threw: ${e.message}`, "fail");
+  }
+
+  // Cleanup edge-case deck
+  if (edgeDeckId) {
+    try { await POST({ action: "delete_deck", deckId: edgeDeckId }); } catch {}
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 19: Large payload
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 19: Large payload (100 cards) ───", "info-line");
+  let largeDeckId = null;
+  try {
+    const bigCards = Array.from({ length: 100 }, (_, i) => ({
+      front: `Question ${i + 1}: ${"x".repeat(200)}`,
+      back: `Answer ${i + 1}: ${"y".repeat(200)}`
+    }));
+    const res = await POST({ action: "create_deck", deckName: "Large Deck Test", cards: bigCards, folder: "Stress" });
+    assert(res.status === "success", "100-card deck created");
+    largeDeckId = res.deckId;
+
+    const verify = await GET({ action: "get_deck", deckId: largeDeckId });
+    assert(verify.data.cards.length === 100, "all 100 cards stored");
+    assert(verify.data.cards[99].front.startsWith("Question 100"), "last card correct");
+  } catch (e) {
+    failed++; log(`  ✗ large payload threw: ${e.message}`, "fail");
+  }
+
+  // Cleanup large deck
+  if (largeDeckId) {
+    try { await POST({ action: "delete_deck", deckId: largeDeckId }); } catch {}
+  }
+
+  // ──────────────────────────────────────────────────────────────
+  // TEST 20: Special characters in settings
+  // ──────────────────────────────────────────────────────────────
+  log("\n─── TEST 20: Special characters in settings ───", "info-line");
+  try {
+    const special = { emoji_key: "🎨🌸✨", unicode: "こんにちは", quotes: 'He said "hello" & she said \'hi\'' };
+    await POST({ action: "save_user_settings", settings: special });
+    const res = await GET({ action: "get_user_settings" });
+    assert(res.data.emoji_key === "🎨🌸✨", "emoji values round-trip");
+    assert(res.data.unicode === "こんにちは", "unicode values round-trip");
+    assert(res.data.quotes === 'He said "hello" & she said \'hi\'', "quotes/ampersands round-trip");
+  } catch (e) {
+    failed++; log(`  ✗ special chars threw: ${e.message}`, "fail");
+  }
+
+  showSummary();
+}
+
+function showSummary() {
+  document.getElementById("runBtn").disabled = false;
+  log("\n" + "═".repeat(50));
+  const total = passed + failed;
+  const msg = `${passed}/${total} passed, ${failed} failed`;
+  log(msg, failed > 0 ? "fail" : "pass");
+  summaryEl.className = `summary ${failed > 0 ? "fail-bg" : "pass-bg"}`;
+  summaryEl.textContent = failed > 0 ? `❌ ${msg}` : `✅ ${msg} — All tests passed!`;
+}
+</script>
+</body>
+</html>

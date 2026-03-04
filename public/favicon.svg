@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Card stack -->
+  <rect x="6" y="4" width="20" height="14" rx="2" fill="#e2b714" opacity="0.3" transform="rotate(-6 16 11)"/>
+  <rect x="6" y="4" width="20" height="14" rx="2" fill="#e2b714" opacity="0.6" transform="rotate(-2 16 11)"/>
+  <rect x="6" y="4" width="20" height="14" rx="2" fill="#e2b714" rx="2"/>
+  <!-- Cozy spark -->
+  <text x="16" y="14" text-anchor="middle" font-size="9" font-weight="bold" fill="#323437" font-family="monospace">CC</text>
+  <!-- Bottom accent bar -->
+  <rect x="8" y="22" width="16" height="3" rx="1.5" fill="#e2b714"/>
+</svg>
